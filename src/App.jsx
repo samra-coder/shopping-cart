@@ -1,17 +1,20 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import './App.css'
 import Home from './pages/Home'
 import Cart from './pages/Cart'
 
+import { CardProvider, useCart } from './context/CardContext'
+
 function Navbar(){
+
+  const { card } = useCart()
  return (
 
-         <nav classNameName="navbar navbar-expand-lg navbar-dark bg-dark">
+         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
          <div className="container">
             <Link className="navbar-brand fw-bold " to="/"> 🛒 My Shop</Link>
            <div>
            <Link className="nav-link d-inline me-3 text-white" to="/">Home</Link>
-           <Link className="nav-link d-inline text-white" to="/Cart">Cart</Link>
+           <Link className="nav-link d-inline text-white" to="/Cart">Cart({card.length})</Link>
            </div>  
         </div>
     </nav>
@@ -22,6 +25,7 @@ function App() {
  
 
   return (
+    <CardProvider>
     <BrowserRouter>
     <Navbar/>
     <Routes>
@@ -29,6 +33,7 @@ function App() {
       <Route path='/Cart' element={<Cart/>} />
     </Routes>
     </BrowserRouter>
+    </CardProvider>
   )
 }
 
