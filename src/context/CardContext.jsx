@@ -1,13 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CardContext=createContext();
 export const CardProvider= ({children}) => {
 
-    const [card, setCard]=useState([]);
+    const [cart, setCart]=useState( () => {
+        const savedCart = localStorage.getItem("cart");
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+    useEffect(() => {
+     localStorage.setItem("cart", JSON.stringify(cart));
+    },[cart]);
+
 
     //add to cart
     const addTocart=(product)=>{
-        setCard((prev) => {
+        setCart((prev) => {
            const existng=prev.find((item)=> item.id===product.id)
            if(existng){
             return prev.map((item) => item.id===product.id? {...item, qty: item.qty+1} : item)
@@ -16,11 +23,27 @@ export const CardProvider= ({children}) => {
         })
     }
 
+    //delete product from cart
+    const delcart=(id)=>{
+        setCart((prev) => prev.filter((item) => item.id!==id))
+    }
+
+    //update qty in cart
+    const updcart= (id,qty) => {
+        setCart((prev) => prev.map((item) => (item.id===id ? {...item, qty} : item ))
+    )
+    }
+
+    // sum total
+    const total= cart.reduce((sum,item) => sum + item.price* item.qty, 0)
+
+    
+
     return(
-        <CardContext.Provider value={{card, setCard, addTocart}}>
+        <CardContext.Provider value={{cart, addTocart, delcart, updcart, total}}>
             {children}
         </CardContext.Provider>
     )
 }
 //custom hook
-export const useCart=() => useContext(CardContext)
+export const useCart = () => useContext(CardContext);

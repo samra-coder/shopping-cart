@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
-import Cart from './pages/Cart'
+import CartPage from './pages/CartPage'
 
 import { CardProvider, useCart } from './context/CardContext'
 
 function Navbar(){
 
-  const { card } = useCart()
+  const { cart } = useCart()
  return (
 
          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -14,7 +14,7 @@ function Navbar(){
             <Link className="navbar-brand fw-bold " to="/"> 🛒 My Shop</Link>
            <div>
            <Link className="nav-link d-inline me-3 text-white" to="/">Home</Link>
-           <Link className="nav-link d-inline text-white" to="/Cart">Cart({card.length})</Link>
+           <Link className="nav-link d-inline text-white" to="/Cart">Cart({cart.length})</Link>
            </div>  
         </div>
     </nav>
@@ -30,7 +30,7 @@ function App() {
     <Navbar/>
     <Routes>
       <Route path='/' element={<Home/>} />
-      <Route path='/Cart' element={<Cart/>} />
+      <Route path='/Cart' element={<CartPage/>} />
     </Routes>
     </BrowserRouter>
     </CardProvider>
