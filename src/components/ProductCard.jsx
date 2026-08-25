@@ -2,7 +2,7 @@ import { useCart } from "../context/CardContext"
 
 export default function ProductCard({product}){
 
-    const { addTocart} =useCart()
+    const { addTocart } =useCart()
 
     return (
         <div className="card shadow-sm h-100 text-center">

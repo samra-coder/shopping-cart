@@ -1,7 +1,7 @@
 import ProductCard from "./ProductCard"
 
 const product =[
-    {id:1,name:"laptop", price:80000},
+    {id:1,name:"laptop", price:8},
    
 ]
 
